@@ -7,5 +7,5 @@ class Base:
     id: Any
     __name__: str
 
-    def __tablename__(cls) -> str:
-        return cls.__name__.lower()
+    def __tablename__(self) -> str:
+        return self.__name__.lower()
