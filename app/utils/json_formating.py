@@ -21,5 +21,5 @@ def json_formating(result):
             time_differences.append((entry[9]-entry[8]).days)
     json['contracts_number'] = len(result)
     json['inversion'] =  round(invertion, 2)
-    json['execution_mean'] = sum(time_differences)/len(result)
+    json['execution_mean'] = round(sum(time_differences)/len(result), 2)
     return json

@@ -8,7 +8,7 @@ def get_contracts(category,year):
     query = f"""
     SELECT c.id, t.expedition_month, t.expedition_trimester, c.title, t.buyer_name, t.date, c.amount, c.currency, c.start_date, c.end_date 
     FROM {category} as t JOIN contracts as c ON t._id = c.entry_id
-    WHERE t.expedition_year = {year} LIMIT 5
+    WHERE t.expedition_year = {year}
     """
     db.connect()
     result = db.select_rows(query)
