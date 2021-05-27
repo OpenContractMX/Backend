@@ -4,7 +4,7 @@ def json_formating(result):
     invertion = 0
     time_differences = list()
     for entry in result:
-        if entry[7] == "TETS":
+        if entry[7] == "TEST":
             pass
         else:
             json_entry = dict()
