@@ -28,3 +28,11 @@ class Database:
                 raise e
             finally:
                 print("Connection to DB opened successfully.")
+
+    def select_rows(self, query):
+        """Run a SQL query to select rows from table."""
+        with self.conn.cursor() as cur:
+            cur.execute(query)
+            records = [row for row in cur.fetchall()]
+            cur.close()
+            return records
