@@ -29,6 +29,7 @@ def json_formating_year(result):
     top_ten = nlargest(10, json['contracts'], key=lambda item: item["amount"])
     json["top_ten"] = top_ten
     json["months"] = CountFrequency(months)
+    json.pop("contracts", None)
     return json
 
 def json_formating_month_trimester(result):
