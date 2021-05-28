@@ -14,3 +14,24 @@ def get_contracts(category,year):
     result = db.select_rows(query)
     return result
     # SELECT (c.id, c.currency, c.amount, c.start_date, c.end_date, t.MONTH, t.trimester, t.buyer_name) FROM contracts as c JOIN tags as t ON c.entry_id = t._id WHERE t.expedition_year = 2016
+
+
+def get_contracts_month(category,year,month):
+    query = f"""
+    SELECT c.id, c.title, t.buyer_name, t.date, c.amount, c.currency
+    FROM {category} as t JOIN contracts as c ON t._id = c.entry_id
+    WHERE t.expedition_year = {year} and t.expedition_month = {month}
+    """
+    db.connect()
+    result = db.select_rows(query)
+    return result
+
+def get_contracts_trimester(category,year,trimester):
+    query = f"""
+    SELECT c.id, c.title, t.buyer_name, t.date, c.amount, c.currency 
+    FROM {category} as t JOIN contracts as c ON t._id = c.entry_id
+    WHERE t.expedition_year = {year} and t.expedition_trimester = {trimester}
+    """
+    db.connect()
+    result = db.select_rows(query)
+    return result
