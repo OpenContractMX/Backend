@@ -59,7 +59,7 @@ def GET_contracts(category: str = "comunicacion_transporte", year: int = 2016, m
 
 
 @app.get("/api/download")
-def GET_contracts(category: str = "comunicacion_transporte", year: int = 2016, month: int=None, trimester: int=None):
+def GET_contracts(category: str = "comunicacion_transporte", year: int = 2016, month: int=0, trimester: int=0):
     try:
 
         if not validate_category(category):
@@ -67,6 +67,9 @@ def GET_contracts(category: str = "comunicacion_transporte", year: int = 2016, m
 
         if not validate_year(year):
             return {"response": "Error year is not valid"}
+
+        if (month > 0) & (trimester > 0):
+            return {"response": "Error you can only filter by month or trimester but not both"}
 
         
 
