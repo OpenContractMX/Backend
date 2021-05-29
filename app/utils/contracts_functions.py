@@ -4,7 +4,7 @@ from app.core.config import settings
 db = Database(settings)
 
 
-def get_contracts(category,year):
+def get_contracts(category, year):
     query = f"""
     SELECT c.id, t.expedition_month, t.expedition_trimester, c.title, t.buyer_name, t.date, c.amount, c.currency, c.start_date, c.end_date 
     FROM {category} as t JOIN contracts as c ON t._id = c.entry_id

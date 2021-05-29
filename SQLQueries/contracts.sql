@@ -9,3 +9,14 @@ CREATE TABLE contracts (
     currency VARCHAR(5) NOT NULL,
     entry_id VARCHAR(30) NOT NULL
 );
+\ copy contracts(
+    subcontract_id,
+    title,
+    status,
+    start_date,
+    end_date,
+    amount,
+    currency,
+    entry_id
+)
+from 'ContractsForDB.csv' with DELIMITER '~';
