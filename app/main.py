@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
-
 from app.core.config import settings
 
 from app.utils.contracts_functions import get_contracts, get_download_year
@@ -94,17 +93,18 @@ def GET_contracts(
 
         if month > 0:
             result = get_download_month(category, year, month)
-            response = convert_to_csv(result)
-
+            convert_to_csv(result)
+            filename= f"{category}_{year}_Month_{month}.csv"
         elif trimester > 0:
             result = get_download_trimester(category, year, trimester)
-            response = convert_to_csv(result)
-
+            convert_to_csv(result)
+            filename= f"{category}_{year}_Quarter_{trimester}.csv"
         else:
             result = get_download_year(category, year)
-            response = convert_to_csv(result)
+            convert_to_csv(result)
+            filename= f"{category}_{year}.csv"
+        print("si estamos llegando")
+        return FileResponse(path="download.csv", media_type= "text/csv",filename= filename,headers={"Content-Type": "text/csv"})
 
-        return {"response": response}
-        # return FileResponse("download.csv")
     except Exception as e:
-        print("An error ocurred")
+        print(f"An error ocurred: {e}")

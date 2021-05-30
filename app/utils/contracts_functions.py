@@ -40,7 +40,11 @@ def get_contracts_trimester(category, year, trimester):
 
 def get_download_year(category, year):
     query = f"""
-    SELECT * FROM {category} as t JOIN parties as p ON t._id = p.entry_id
+    SELECT t._id, t.buyer_id , t.buyer_name , t.cycle , t.date , t.expedition_day , t.expedition_month,
+    t.expedition_trimester , t.expedition_year , t.tag,
+    p.name , p._id , p.roles , p.identifier_schema , p.identifier_uri , p.street_address , p.locality_address,
+    p.region_address , p.postal_code , p.country_name , p.contact_name , p.contact_email , p.contact_telephone , p.contact_fax 
+    FROM {category} as t JOIN parties as p ON t._id = p.entry_id
     WHERE t.expedition_year = {year}
     """
     db.connect()
@@ -50,7 +54,11 @@ def get_download_year(category, year):
 
 def get_download_month(category, year, month):
     query = f"""
-    SELECT * FROM {category} as t JOIN parties as p ON t._id = p.entry_id
+    SELECT t._id, t.buyer_id , t.buyer_name , t.cycle , t.date , t.expedition_day , t.expedition_month,
+    t.expedition_trimester , t.expedition_year , t.tag,
+    p.name , p._id , p.roles , p.identifier_schema , p.identifier_uri , p.street_address , p.locality_address,
+    p.region_address , p.postal_code , p.country_name , p.contact_name , p.contact_email , p.contact_telephone , p.contact_fax  
+    FROM {category} as t JOIN parties as p ON t._id = p.entry_id
     WHERE t.expedition_year = {year} and t.expedition_month = {month}
     """
     db.connect()
@@ -60,7 +68,11 @@ def get_download_month(category, year, month):
 
 def get_download_trimester(category, year, trimester):
     query = f"""
-    SELECT * FROM {category} as t JOIN parties as p ON t._id = p.entry_id
+    SELECT t._id, t.buyer_id , t.buyer_name , t.cycle , t.date , t.expedition_day , t.expedition_month,
+    t.expedition_trimester , t.expedition_year , t.tag,
+    p.name , p._id , p.roles , p.identifier_schema , p.identifier_uri , p.street_address , p.locality_address,
+    p.region_address , p.postal_code , p.country_name , p.contact_name , p.contact_email , p.contact_telephone , p.contact_fax  
+    FROM {category} as t JOIN parties as p ON t._id = p.entry_id
     WHERE t.expedition_year = {year} and t.expedition_trimester = {trimester}
     """
     db.connect()
