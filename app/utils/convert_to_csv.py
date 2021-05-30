@@ -1,4 +1,4 @@
-from app.main import GET_contracts
+#from app.main import GET_contracts
 import pandas as pd
 
 
