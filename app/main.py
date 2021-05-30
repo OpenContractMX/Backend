@@ -15,6 +15,8 @@ from app.utils.json_formating import json_formating_month_trimester
 
 from app.utils.validate_category import validate_category
 from app.utils.validate_year import validate_year
+from app.utils.validate_month import validate_month
+from app.utils.validate_trimester import validate_trimester
 
 from app.utils.convert_to_csv import convert_to_csv
 
@@ -36,8 +38,8 @@ app.add_middleware(
 
 @app.get("/api/contracts")
 def GET_contracts(
-    category: str = "comunicacion_transporte",
-    year: int = 2016,
+    category: str = "",
+    year: int = 0,
     month: int = 0,
     trimester: int = 0,
 ):
@@ -48,6 +50,12 @@ def GET_contracts(
 
         if not validate_year(year):
             return {"response": "Error year is not valid"}
+
+        if not validate_month(month):
+            return {"response": "Error month is not valid"}
+
+        if not validate_trimester(trimester):
+            return {"response": "Error trimester is not valid"}
 
         if (month > 0) & (trimester > 0):
             return {
@@ -73,8 +81,8 @@ def GET_contracts(
 
 @app.get("/api/download")
 def GET_contracts(
-    category: str = "comunicacion_transporte",
-    year: int = 2016,
+    category: str = "",
+    year: int = 0,
     month: int = 0,
     trimester: int = 0,
 ):
@@ -85,6 +93,12 @@ def GET_contracts(
 
         if not validate_year(year):
             return {"response": "Error year is not valid"}
+
+        if not validate_month(month):
+            return {"response": "Error month is not valid"}
+
+        if not validate_trimester(trimester):
+            return {"response": "Error trimester is not valid"}
 
         if (month > 0) & (trimester > 0):
             return {
