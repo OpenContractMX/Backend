@@ -71,6 +71,7 @@ def GET_contracts(
             json = json_formating_month_trimester(result)
 
         else:
+            
             result = get_contracts(category, year)
             json = json_formating_year(result)
 

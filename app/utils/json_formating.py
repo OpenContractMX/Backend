@@ -1,7 +1,40 @@
 from heapq import nlargest
 
 def json_formating_year(result):
+    
     json = dict()
+    if len(result) == 0:
+        json['contracts_number'] = len(result)
+        json['inversion'] = 0
+        json['execution_mean'] = 0
+        top_ten = []
+        for i in range(0,10):
+            top_ten.append({
+                "id": 0,
+            "month": 0,
+            "trimester": 0,
+            "title": "vacio",
+            "buyer_name": "vacio",
+            "date": "0",
+            "amount": 0,
+            "currency": ""
+            })
+        json["top_ten"] = top_ten
+        json["months"] =  {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0
+            }
+        return json
     json['contracts'] = list()
     invertion = 0
     time_differences = list()
