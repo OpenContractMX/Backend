@@ -36,12 +36,12 @@ app.add_middleware(
 async def GET_contracts(
     category: str = "",
     year: int = 0,
-    month: int = 0,
-    trimester: int = 0,
+    month: int = None,
+    trimester: int = None,
 ):
     general_contracts_validations(category, year, month, trimester)
 
-    if month > 0:
+    if not month == None:
         try:
             result = get_contracts_month(category, year, month)
             json = json_formating_month_trimester(result)
@@ -52,7 +52,7 @@ async def GET_contracts(
                 detail="Internal Error",
             )
 
-    elif trimester > 0:
+    elif not trimester == None:
         try:
             result = get_contracts_trimester(category, year, trimester)
             json = json_formating_month_trimester(result)

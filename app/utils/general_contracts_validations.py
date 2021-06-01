@@ -6,21 +6,36 @@ from app.utils.validate_category import validate_category
 
 
 def general_contracts_validations(category: str, year: int, month: int, trimester: int):
-    if not validate_category(category):
-        raise HTTPException(status_code=400, detail="Error category is not valid")
-        # return {"response": "Error categorynv is not valid"}
 
-    if not validate_year(year):
-        raise HTTPException(status_code=400, detail="Error year is not valid")
+    if month == None and trimester == None:
 
-    if not validate_month(month):
-        raise HTTPException(status_code=400, detail="Error month is not valid")
+        if not validate_category(category):
+            raise HTTPException(status_code=400, detail="Error category is not valid")
 
-    if not validate_trimester(trimester):
-        raise HTTPException(status_code=400, detail="Error trimester is not valid")
+        if not validate_year(year):
+            raise HTTPException(status_code=400, detail="Error year is not valid")
 
-    if (month > 0) & (trimester > 0):
-        raise HTTPException(
-            status_code=400,
-            detail="Error you can only filter by month or trimester but not both",
-        )
+    elif month == None and not trimester == None:
+
+        if not validate_category(category):
+            raise HTTPException(status_code=400, detail="Error category is not valid")
+
+        if not validate_year(year):
+            raise HTTPException(status_code=400, detail="Error year is not valid")
+
+        if not validate_trimester(trimester):
+            raise HTTPException(status_code=400, detail="Error trimester is not valid")
+
+    elif not month == None and trimester == None:
+
+        if not validate_category(category):
+            raise HTTPException(status_code=400, detail="Error category is not valid")
+
+        if not validate_year(year):
+            raise HTTPException(status_code=400, detail="Error year is not valid")
+
+        if not validate_month(month):
+            raise HTTPException(status_code=400, detail="Error month is not valid")
+
+    else:
+        raise HTTPException(status_code=400, detail="Error you can only send either month or trimester")
