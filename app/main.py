@@ -1,4 +1,3 @@
-from calendar import month_name
 from app.utils.general_contracts_validations import general_contracts_validations
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -14,11 +13,6 @@ from app.utils.contracts_functions import (
 
 from app.utils.json_formating import json_formating_year
 from app.utils.json_formating import json_formating_month_trimester
-
-from app.utils.validate_category import validate_category
-from app.utils.validate_year import validate_year
-from app.utils.validate_month import validate_month
-from app.utils.validate_trimester import validate_trimester
 
 from app.utils.convert_to_csv import convert_to_csv
 
