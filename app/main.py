@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
@@ -37,47 +37,66 @@ app.add_middleware(
 
 
 @app.get("/api/contracts")
-def GET_contracts(
+async def GET_contracts(
     category: str = "",
     year: int = 0,
     month: int = 0,
     trimester: int = 0,
 ):
-    try:
 
-        if not validate_category(category):
-            return {"response": "Error category is not valid"}
+    if not validate_category(category):
+        raise HTTPException(status_code=400, detail="Error category is not valid")
+        # return {"response": "Error categorynv is not valid"}
 
-        if not validate_year(year):
-            return {"response": "Error year is not valid"}
+    if not validate_year(year):
+        raise HTTPException(status_code=400, detail="Error year is not valid")
 
-        if not validate_month(month):
-            return {"response": "Error month is not valid"}
+    if not validate_month(month):
+        raise HTTPException(status_code=400, detail="Error month is not valid")
 
-        if not validate_trimester(trimester):
-            return {"response": "Error trimester is not valid"}
+    if not validate_trimester(trimester):
+        raise HTTPException(status_code=400, detail="Error trimester is not valid")
 
-        if (month > 0) & (trimester > 0):
-            return {
-                "response": "Error you can only filter by month or trimester but not both"
-            }
+    if (month > 0) & (trimester > 0):
+        raise HTTPException(
+            status_code=400,
+            detail="Error you can only filter by month or trimester but not both",
+        )
 
-        if month > 0:
+    if month > 0:
+        try:
             result = get_contracts_month(category, year, month)
             json = json_formating_month_trimester(result)
+        except Exception as e:
+            print("error formatting in month json", e)
+            raise HTTPException(
+                status_code=500,
+                detail="Internal Error",
+            )
 
-        elif trimester > 0:
+    elif trimester > 0:
+        try:
             result = get_contracts_trimester(category, year, trimester)
             json = json_formating_month_trimester(result)
+        except Exception as e:
+            print("error formatting in trimester json", e)
+            raise HTTPException(
+                status_code=500,
+                detail="Internal Error",
+            )
 
-        else:
-
+    else:
+        try:
             result = get_contracts(category, year)
             json = json_formating_year(result)
+        except Exception as e:
+            print("error formatting in year json", e)
+            raise HTTPException(
+                status_code=500,
+                detail="Internal Error",
+            )
 
-        return {"response": json}
-    except Exception as e:
-        print("An error ocurred", e)
+    return {"response": json}
 
 
 @app.get("/api/download")
