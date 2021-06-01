@@ -71,7 +71,7 @@ def GET_contracts(
             json = json_formating_month_trimester(result)
 
         else:
-            
+
             result = get_contracts(category, year)
             json = json_formating_year(result)
 
@@ -81,7 +81,7 @@ def GET_contracts(
 
 
 @app.get("/api/download")
-def GET_contracts(
+def GET_contracts_csv(
     category: str = "",
     year: int = 0,
     month: int = 0,
@@ -109,17 +109,22 @@ def GET_contracts(
         if month > 0:
             result = get_download_month(category, year, month)
             convert_to_csv(result)
-            filename= f"{category}_{year}_Month_{month}.csv"
+            filename = f"{category}_{year}_Month_{month}.csv"
         elif trimester > 0:
             result = get_download_trimester(category, year, trimester)
             convert_to_csv(result)
-            filename= f"{category}_{year}_Quarter_{trimester}.csv"
+            filename = f"{category}_{year}_Quarter_{trimester}.csv"
         else:
             result = get_download_year(category, year)
             convert_to_csv(result)
-            filename= f"{category}_{year}.csv"
-        print("si estamos llegando")
-        return FileResponse(path="download.csv", media_type= "text/csv",filename= filename,headers={"Content-Type": "text/csv"})
+            filename = f"{category}_{year}.csv"
+        # print("si estamos llegando")
+        return FileResponse(
+            path="download.csv",
+            media_type="text/csv",
+            filename=filename,
+            headers={"Content-Type": "text/csv"},
+        )
 
     except Exception as e:
         print(f"An error ocurred: {e}")
