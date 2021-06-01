@@ -1,3 +1,5 @@
+from calendar import month_name
+from app.utils.general_contracts_validations import general_contracts_validations
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -43,25 +45,7 @@ async def GET_contracts(
     month: int = 0,
     trimester: int = 0,
 ):
-
-    if not validate_category(category):
-        raise HTTPException(status_code=400, detail="Error category is not valid")
-        # return {"response": "Error categorynv is not valid"}
-
-    if not validate_year(year):
-        raise HTTPException(status_code=400, detail="Error year is not valid")
-
-    if not validate_month(month):
-        raise HTTPException(status_code=400, detail="Error month is not valid")
-
-    if not validate_trimester(trimester):
-        raise HTTPException(status_code=400, detail="Error trimester is not valid")
-
-    if (month > 0) & (trimester > 0):
-        raise HTTPException(
-            status_code=400,
-            detail="Error you can only filter by month or trimester but not both",
-        )
+    general_contracts_validations(category, year, month, trimester)
 
     if month > 0:
         try:
@@ -106,44 +90,46 @@ def GET_contracts_csv(
     month: int = 0,
     trimester: int = 0,
 ):
-    try:
 
-        if not validate_category(category):
-            return {"response": "Error category is not valid"}
+    general_contracts_validations(category, year, month, trimester)
 
-        if not validate_year(year):
-            return {"response": "Error year is not valid"}
-
-        if not validate_month(month):
-            return {"response": "Error month is not valid"}
-
-        if not validate_trimester(trimester):
-            return {"response": "Error trimester is not valid"}
-
-        if (month > 0) & (trimester > 0):
-            return {
-                "response": "Error you can only filter by month or trimester but not both"
-            }
-
-        if month > 0:
+    if month > 0:
+        try:
             result = get_download_month(category, year, month)
             convert_to_csv(result)
             filename = f"{category}_{year}_Month_{month}.csv"
-        elif trimester > 0:
+        except Exception as e:
+            print("error formatting in year json", e)
+            raise HTTPException(
+                status_code=500,
+                detail="Internal Error",
+            )
+    elif trimester > 0:
+        try:
             result = get_download_trimester(category, year, trimester)
             convert_to_csv(result)
             filename = f"{category}_{year}_Quarter_{trimester}.csv"
-        else:
+        except Exception as e:
+            print("error formatting in year json", e)
+            raise HTTPException(
+                status_code=500,
+                detail="Internal Error",
+            )
+    else:
+        try:
             result = get_download_year(category, year)
             convert_to_csv(result)
             filename = f"{category}_{year}.csv"
-        # print("si estamos llegando")
-        return FileResponse(
-            path="download.csv",
-            media_type="text/csv",
-            filename=filename,
-            headers={"Content-Type": "text/csv"},
-        )
-
-    except Exception as e:
-        print(f"An error ocurred: {e}")
+        except Exception as e:
+            print("error formatting in year json", e)
+            raise HTTPException(
+                status_code=500,
+                detail="Internal Error",
+            )
+    # print("si estamos llegando")
+    return FileResponse(
+        path="download.csv",
+        media_type="text/csv",
+        filename=filename,
+        headers={"Content-Type": "text/csv"},
+    )
