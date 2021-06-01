@@ -81,13 +81,13 @@ async def GET_contracts(
 def GET_contracts_csv(
     category: str = "",
     year: int = 0,
-    month: int = 0,
-    trimester: int = 0,
+    month: int = None,
+    trimester: int = None,
 ):
 
     general_contracts_validations(category, year, month, trimester)
 
-    if month > 0:
+    if not month == None:
         try:
             result = get_download_month(category, year, month)
             convert_to_csv(result)
@@ -98,7 +98,7 @@ def GET_contracts_csv(
                 status_code=500,
                 detail="Internal Error",
             )
-    elif trimester > 0:
+    elif not trimester == None:
         try:
             result = get_download_trimester(category, year, trimester)
             convert_to_csv(result)
