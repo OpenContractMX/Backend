@@ -39,3 +39,5 @@ def general_contracts_validations(category: str, year: int, month: int, trimeste
 
     else:
         raise HTTPException(status_code=400, detail="Error you can only send either month or trimester")
+    
+    print("Pass validation")
