@@ -4,6 +4,9 @@ from app.main import app
 client = TestClient(app)
 
 
+""" Testing basic requests """
+
+
 def test_should_get_contracts_csv_by_year():
 
     response = client.get("/api/download?category=social&year=2016")
@@ -22,6 +25,9 @@ def test_should_get_contracts_csv_by_trimester():
     assert response.status_code == 200
 
 
+""" Testing out of range params """
+
+
 def test_should_not_get_contracts_csv_by_year():
 
     response = client.get("/api/download?category=social&year=2020")
@@ -38,6 +44,9 @@ def test_should_not_get_contracts_csv_by_trimester():
 
     response = client.get("/api/download?category=social&trimester=5")
     assert response.status_code == 400
+
+
+""" Testing that the duplicated params validations works """
 
 
 def test_should_not_get_contracts_csv_by_year_because_month_and_trimester():
