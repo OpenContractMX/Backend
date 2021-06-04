@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-OpenContractMX is a project developed by Platzi Master Students in order to catch more than 350,000 public contracts published by the goverment of Mexico and show them in a easy way for reporters, researchers and similars so they can get great information about how the goverment spents in the different areas
+OpenContractMX is a project developed by Platzi Master Students in order to catch more than 350,000 public contracts published by the Government of Mexico and show them in a easy way for reporters, researchers and similars so they can get great information about how the goverment spents in the different areas
 
 ## Description
 

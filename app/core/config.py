@@ -16,5 +16,8 @@ class Settings:
     POSTGRES_PORT: str = os.getenv("POSTGRES_PORT")
     POSTGRES_DB: str = os.getenv("POSTGRES_DB")
 
+    CLIENT: str = os.getenv("CLIENT")
+    ENVIRONMENT: str = os.getenv("ENVIRONMENT")
+
 
 settings = Settings()

@@ -18,10 +18,13 @@ from app.utils.convert_to_csv import convert_to_csv
 
 app = FastAPI(title=settings.PROJECT_TITLE, version=settings.PROJECT_VERSION)
 
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-]
+if settings.ENVIRONMENT == "production":
+    origins = [settings.CLIENT]
+else:
+    origins = [
+        "http://localhost:3000",
+        "http://localhost:8080",
+    ]
 
 app.add_middleware(
     CORSMiddleware,
