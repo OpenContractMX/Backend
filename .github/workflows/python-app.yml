@@ -35,8 +35,8 @@ jobs:
       run: |
         touch .env
         echo -e "POSTGRES_USER= ${{ secrets.POSTGRES_DB }} \nPOSTGRES_PASSWORD= ${{ secrets.POSTGRES_PASSWORD }} \nPOSTGRES_PORT= ${{ secrets.POSTGRES_PORT }} \nPOSTGRES_SERVER= ${{ secrets.POSTGRES_SERVER }} \nPOSTGRES_USER= ${{ secrets.POSTGRES_USER }}" >> .env
-      run: |
         pytest
+        
       env:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
