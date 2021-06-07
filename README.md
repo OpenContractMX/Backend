@@ -46,4 +46,4 @@ For the backend we used:
 
 We deployed the backend application in heroku, you can find the link [here](https://opencontractsmx.herokuapp.com/).
 
-If you want to see the Frontend deployment that it is using this backend, please go [here]().
+If you want to see the Frontend deployment that it is using this backend, please go [here](https://opencontractmx.netlify.app/).
